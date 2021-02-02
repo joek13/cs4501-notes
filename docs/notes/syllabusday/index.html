@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4102-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4102-notes/css/style.min.css">
+
+    <title>00. Syllabus Day</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4102-notes/">Joe Kerrigan&#39;s cs4102 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>00. Syllabus Day</h1><time>February 1, 2021</time></header><p>Slides are hosted on <a href="https://uva-cs.github.io/cs4102-s21/readme.html">the course website</a>.</p>
+<p>Office hours are hosted on the class Discord.</p>
+<h2 id="the-textbook">The textbook</h2>
+<p>We &ldquo;really need&rdquo; to read and study material from the textbook.
+Readings are posted as assigned, and the textbook can be accessed for free from the UVa Library.</p>
+<h2 id="modules">Modules</h2>
+<p>The course is divided into four modules.</p>
+<ol>
+<li>Divide and conquer / sorting</li>
+<li>Graphs, MST, find-union</li>
+<li>Greedy algorithms and dynamic programming</li>
+<li>Network flow and reductions</li>
+</ol>
+<h2 id="quizzes">Quizzes</h2>
+<p>Short assessments for each of the four modules.</p>
+<ul>
+<li>Will be take-home over a ~24 hour period</li>
+</ul>
+<p>Three possible grade outcomes: incomplete, satisfactory, mastered. You&rsquo;ll have three opportunities at most of these.</p>
+<h2 id="homeworks">Homeworks</h2>
+<p>Two kinds: most homeworks are programming assignments or written descriptions of algorithms / proofs</p>
+<h3 id="programming-hw">Programming HW</h3>
+<ul>
+<li>Can be written in Java, C++, Python</li>
+<li>Almost HackerRank style problems</li>
+</ul>
+<h3 id="written-hw">Written HW</h3>
+<ul>
+<li>Solving small problems, analyzing runtimes, etc.</li>
+<li>Proofs of correctness, etc.</li>
+<li>Typeset in LaTeX</li>
+</ul>
+<p>Homeworks are also graded according to completeness. Homeworks can be submitted multiple times.</p>
+<p>Homeworks have two deadlines: soft and hard. Soft deadlines are scheduled several days before quizzes, so you&rsquo;re best prepared. But the hard deadline is almost two weeks later. There is no grade penalty for missing the soft deadline.</p>
+<h3 id="programming-homework">Programming homework</h3>
+<p>Some tips:</p>
+<ul>
+<li>Understand the problem; hidden test cases are used for grading</li>
+<li>Consider all boundary cases</li>
+<li>Use pre-existing library code</li>
+<li>Know how to handle floating point numbers</li>
+</ul>
+<h3 id="typesetting">Typesetting</h3>
+<p>Templates and tutorials are provided. Including images of text or formulas is verboten!</p>
+<h2 id="collaboration">Collaboration</h2>
+<p>Quizzes are strictly independent.</p>
+<p>Programming homeworks can be completed in groups of 3 or fewer to discuss the algorithmic aspects only.
+(Credit your co-conspirators using a comment in your code.)</p>
+<p>Written homeworks can be completed in groups of 3 or fewer, but you have to type up your own solution.</p>
+<h2 id="academic-integrity">Academic integrity</h2>
+<p>Collaboration is allowed and encouraged.</p>
+<p>Do not:</p>
+<ul>
+<li>Share written solutions</li>
+<li>Share documents (e.g., with Overleaf)</li>
+<li>Share debugging of code</li>
+<li>Seek published solutions online</li>
+</ul>
+<p>Do:</p>
+<ul>
+<li>Be able to explain anything you submit.</li>
+</ul>
+<h3 id="what-you-already-know-from-cs2150">What you already know from CS2150</h3>
+<ul>
+<li>Definition of an algorithm</li>
+<li>Definition of algorithm complexity</li>
+<li>Measuring worst-case complexity</li>
+<li>Cost as a function of input size</li>
+<li>Asymptotic growth rate: \( O \), \( \Theta \)</li>
+</ul>
+<h3 id="what-you-already-know-from-21023102">What you already know from 2102/3102</h3>
+<ul>
+<li>Proof by induction, contradiction</li>
+<li>Counting, probability, combinatorics, permutations</li>
+</ul>
+<h2 id="introducing-an-algorithm">Introducing an algorithm</h2>
+<h3 id="a-first-algorithm-making-change">A first algorithm: making change</h3>
+<p>Problem: given item cost, and amount paid, make change <em>(using the fewest possible coins)</em>.</p>
+<p>E.g.: Costs $4.37, paid $5 → two quarters, a dime, and three pennies</p>
+<p>Solution: look at outstanding amount; while it&rsquo;s greater than zero, take the largest coin value that&rsquo;s less than the amount oustanding, add it to the change, and subtract its value.</p>
+<p>Q: Is this solution optimal? How could we show this?
+A: Prove that it&rsquo;s <em>impossible</em> to solve this more efficiently.</p>
+<h3 id="greedy-algorithms">Greedy algorithms</h3>
+<p>Example of a family called <em>greedy algorithms</em></p>
+<p>Suitable for optimization problems: class of problems with many feasible solutions, but only one is optimal</p>
+<p>Immediately greedy: at each step, choose the &ldquo;best&rdquo; solution for right now. Don&rsquo;t look into the future.</p>
+<p>For some optimization problems, greedy algorithms are great; for others (e.g. select the best cheess move), they aren&rsquo;t.</p>
+<p>Interesting note: our greedy algorithm is only best for American coins. For example: say we had an 11-cent coin (the Floryan), making change for 15 cents.</p>
+<p>Our algorithm says: <code>1 Floryan, 4 pennies</code>. But a better solution exists: <code>1 dime, 1 nickel</code>.</p>
+<p>Can we come up with a change algorithm that generalizes better? There are a few approaches:</p>
+<ul>
+<li>Brute force</li>
+<li>Dynamic programming</li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>

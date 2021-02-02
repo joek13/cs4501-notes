@@ -1,0 +1,5 @@
+baseURL = "http://joek13.github.io/cs4501-notes/"
+languageCode = "en-us"
+title = "Joe Kerrigan's cs4501 Notes"
+theme = "etch"
+publishDir = "docs"

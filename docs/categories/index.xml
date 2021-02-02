@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Joe Kerrigan&#39;s cs4102 Notes</title>
+    <link>http://joek13.github.io/cs4102-notes/categories/</link>
+    <description>Recent content in Categories on Joe Kerrigan&#39;s cs4102 Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://joek13.github.io/cs4102-notes/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+    
+  </channel>
+</rss>
