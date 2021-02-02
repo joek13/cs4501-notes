@@ -6,5 +6,8 @@ draft: true
 
 My notes for cs4501, Computer Vision.
 
+Professor: Vicente Ordóñez
+
 ### Links
 - [Course website](https://www.vicenteordonez.com/vision/)
+- Email: [vicente@virginia.edu](mailto:vicente@virginia.edu)
