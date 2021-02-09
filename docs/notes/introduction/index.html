@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>01. Introduction: What is Computer Vision?</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>01. Introduction: What is Computer Vision?</h1><time>February 4, 2021</time></header><h2 id="a-ridiculously-brief-history-of-computer-vision">A &ldquo;ridiculously brief&rdquo; history of computer vision</h2>
+<ul>
+<li>Most computers didn&rsquo;t have graphical interfaces until relatively recently</li>
+<li>2010s: deep learning / convolutional approaches flourish</li>
+</ul>
+<h2 id="some-high-reliability-domains">Some high-reliability domains</h2>
+<ul>
+<li>Digit / letter recognition (check reading, license plate recognition)</li>
+<li>Facial recognition</li>
+<li>Biometrics</li>
+<li>Getting there: object recognition
+<ul>
+<li>e.g., iNaturalist species recognition</li>
+</ul>
+</li>
+<li>Special FX
+<ul>
+<li>e.g., using video to capture actors' facial expressions, then rendering</li>
+</ul>
+</li>
+<li>Sportsvision first-down line</li>
+<li>Medical imaging</li>
+<li>Smart cars</li>
+<li>Gaming (Kinect)</li>
+<li>Industrial robotics</li>
+</ul>
+<h2 id="whats-so-hard">What&rsquo;s so hard?</h2>
+<p>Seeing is:</p>
+<ul>
+<li>Cognitively intensive (&ldquo;a great feat of natural intelligence&rdquo;)</li>
+<li>Nontrivial
+<ul>
+<li>Optical illusions, negative space (gestalt principle), ambiguities</li>
+</ul>
+</li>
+</ul>
+<p>Computer vision is not &ldquo;just pattern recognition.&rdquo; Seeing requires world knowledge, an understanding of context</p>
+<h2 id="what-is-an-image">What is an image?</h2>
+<p>To us, they&rsquo;re easily understood. But to computers, images are two-dimensional arrays of intensities</p>
+<p>Claim: intensity arrays and the visual experience of an image contain the same information; they are merely different representations</p>
+<p>Processing one of these representations is almost an automatic process for most of us&hellip;</p>
+<p>For example: how do we know what an image is like in three dimensions—from a two-dimensional projection?</p>
+<ul>
+<li>There are multiple candidate objects for a single 2-d projection. How do we decide which is real?
+<ul>
+<li>Using world knowledge and context.</li>
+</ul>
+</li>
+</ul>
+<h4 id="other-challenges">Other challenges</h4>
+<ul>
+<li>Variable illumination</li>
+<li>Background clutter</li>
+<li>Intra-class variation
+<ul>
+<li>Some weird chairs look very different, but they&rsquo;re still chairs</li>
+</ul>
+</li>
+</ul>
+<h2 id="what-is-the-state-of-the-art">What is the state of the art?</h2>
+<ul>
+<li>Given enough data, many systems are surprisingly robust to the previously outlined challenges</li>
+<li>But still not at the same level as humans, despite the hype</li>
+<li>Still many open challenges, such as few-shot learning, transfer learning, and unsupervised learning</li>
+</ul>
+<h2 id="non-technical-technical-discussion-cameras">Non-technical technical discussion: Cameras</h2>
+<p>Claim: cameras &ldquo;exist in nature&rdquo; and are discovered rather than invented</p>
+<h3 id="accidental-cameras">Accidental cameras</h3>
+<p>Pinhole cameras can be made accidentally, like using windows and a shutter</p>
+<h2 id="lets-design-a-camera">Let&rsquo;s design a camera</h2>
+<p>Idea 1: just put a piece of film in front of an object. Do we get a reasonable image?</p>
+<ul>
+<li>No&hellip; every point in the image projects to every point in the film, leading to a blurred mess</li>
+</ul>
+<p>Idea 2: add a barrier with a hole to block off most of the rays</p>
+<ul>
+<li>Reduces blurring</li>
+<li>Opening is known as the <em>aperture</em></li>
+</ul>
+<p>Historical note: the word &ldquo;camera&rdquo; comes from Latin, <em>camera obscura</em>. <em>Camera</em> means room. The <em>camera obscura</em> is a dark room with a small aperture, known to ancient Greek and Chinese scholars</p>
+<p>Can &ldquo;save&rdquo; the image on a camera by projecting onto a piece of paper and tracing over by hand.
+Later, by burning into a coating of photosensitive Syrian asphalt on a pewter plate. But it takes several hours.</p>
+<p>Next, the &ldquo;Daguerrotype,&rdquo; an improved version that used better optics in the lens and a more sensitive &ldquo;film&rdquo; material.</p>
+<p>Eastman Kodak Company, in 1885, uses nitrate film</p>
+<h3 id="back-to-the-pinhole-camera">Back to the pinhole camera</h3>
+<ul>
+<li>The image in a pinhole camera gets projected upside down</li>
+<li>Two new concepts:
+<ul>
+<li>\(f\), focal length = distance between aperture and image plane</li>
+<li>\(c\), pinhole center radius (aperture size)</li>
+</ul>
+</li>
+</ul>
+<h3 id="projective-geometry">Projective geometry</h3>
+<p>Cameras turn three-dimensional scenes into two-dimensional projections</p>
+<p>What is not preserved?</p>
+<ul>
+<li>Area</li>
+<li>Length</li>
+<li>Angles (parallel lines converge at a &ldquo;vanishing point&rdquo;)</li>
+</ul>
+<p>What is preserved? (in a standard, perfect pinhole camera)</p>
+<ul>
+<li>Straight lines are straight</li>
+</ul>
+<p>For our purposes, a pinhole camera model is a good approximation of an actual camera.</p>
+<h2 id="digital-cameras">Digital cameras</h2>
+<p>A digital camera replaces film with a sensor array. Each cell in the array is a light-sensitive diode that converts photons to electrons.</p>
+<p>Early digital cameras were much lower resolution than film cameras, because they couldn&rsquo;t fit very many sensors in the sensor array</p>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>

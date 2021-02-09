@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>02. Projective Geometry &amp; Light</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>02. Projective Geometry &amp; Light</h1><time>February 9, 2021</time></header><h3 id="review-cameras">Review: cameras</h3>
+<p>Cameras are cool devices, and they&rsquo;ve been around for longer than you might think.</p>
+<h3 id="shooting-photos-in-manual">Shooting photos in manual</h3>
+<ul>
+<li>Shutter time (time the shutter is open)</li>
+<li>Aperture (size of opening)</li>
+<li>ISO</li>
+<li>Focus / auto-focus</li>
+</ul>
+<p>If you shoot in automatic, these variables are determined for you</p>
+<h3 id="shutter-speed">Shutter speed</h3>
+<ul>
+<li>Long shutter speed lets more light in, but it causes blurring over time</li>
+<li>Long-exposure shots require a completely stable camera</li>
+</ul>
+<h3 id="aperture">Aperture</h3>
+<ul>
+<li>Aperture size impacts depth of field</li>
+<li>Large aperture = background blurred</li>
+<li>Small aperture = background fine</li>
+</ul>
+<h3 id="iso---light-sensitivity">ISO - light sensitivity</h3>
+<ul>
+<li>Make as small as possible</li>
+<li>Overly high ISO results in lots of noise in the image</li>
+</ul>
+<h3 id="trade-offs">Trade offs</h3>
+<ul>
+<li>Small aperture: more focus, less light</li>
+<li>Small shutter time: capture fast moving item, less light</li>
+<li>Small ISO: less noisy, less light</li>
+</ul>
+<h3 id="difficult-pictures">Difficult pictures</h3>
+<ul>
+<li>Small object in foreground (large aperture required)</li>
+<li>Fast-moving object (low shutter time required)</li>
+<li>Dark object (high ISO required)</li>
+</ul>
+<h3 id="final-thoughts---with-a-grain-of-salt">Final thoughts - with a grain of salt</h3>
+<ul>
+<li>Shooting in automatic, especially in low-light conditions, will often go the easy route of jacking up the ISO</li>
+<li>In low light, you might want to increase shutter time or enlarge your aperture</li>
+<li>No shame in shooting automatic in a clear day</li>
+</ul>
+<h2 id="projection-world-coordinates-to-image-coordinates">Projection: world coordinates \(\to\) image coordinates</h2>
+<p>You have an image, which is just a 2D matrix of intensity values. How can we reason about a three-dimensional world?</p>
+<p>But we also care about the opposite process: projecting world coordinates into a 2-dimensional coordinate space.</p>
+<p>Definition of camera coordinates:
+$$
+\mathbf{p} = \langle U, V \rangle
+$$
+Definition of world coordinates:
+$$
+\mathbf{P} = \langle X, Y, Z \rangle
+$$</p>
+<p>With focal length \(f\) (distance from camera to image plane):</p>
+<p>$$
+U = -X * \frac{f}{Z}
+$$
+$$
+U = -Y * \frac{f}{Z}
+$$</p>
+<h3 id="homogeneous-coordinates">Homogeneous coordinates</h3>
+<h4 id="conversion">Conversion</h4>
+<p>Converting to homogeneous coordinates
+$$
+(x, y) \mapsto \langle x, y, 1 \rangle
+$$</p>
+<p>$$
+(x, y, z) \mapsto \langle x, y, z, 1 \rangle
+$$</p>
+<p>Converting from homogeneous coordinates
+$$
+\langle x, y, w \rangle \mapsto (x/w, y/w)
+$$</p>
+<p>Converting to homogeneous coordinates
+$$
+\langle x,y,z,w \rangle \mapsto (x/w, y/w, z/w)
+$$</p>
+<h3 id="desirable-features-of-homogeneous-coordinates">Desirable features of homogeneous coordinates</h3>
+<ul>
+<li>Scale-invariant</li>
+</ul>
+<h3 id="projection-matrix">Projection matrix</h3>
+<p>$$
+x = K[R \space \space t]X
+$$</p>
+<ul>
+<li>\(x\), image coordinates (u, v, 1)</li>
+<li>\(K\), intrinsic matrix (3x3)</li>
+<li>\(R\), rotation (3x3)</li>
+<li>\(t\), translation (3x1)</li>
+<li>\(X\), world coordinates (X,Y,Z, 1)</li>
+</ul>
+<p>Intrinsic assumptions</p>
+<ul>
+<li>Unit aspect ratio (could change this by setting different focal lengths for x and y, \(f_x, f_y\))</li>
+<li>Optical center at origin</li>
+<li>No skew</li>
+</ul>
+<p>Extrinsic assumptions</p>
+<ul>
+<li>No rotation</li>
+<li>Camera at (0,0,0)</li>
+</ul>
+<h3 id="remove-assumption-of-optical-center-at-00">Remove assumption of optical center at (0,0)</h3>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
