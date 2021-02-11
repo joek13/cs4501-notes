@@ -111,3 +111,4 @@ Extrinsic assumptions
 - Camera at (0,0,0)
 
 ### Remove assumption of optical center at (0,0)
+- Add translation term in 

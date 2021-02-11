@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>03. More on Light</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>03. More on Light</h1><time>February 11, 2021</time></header><h2 id="the-big-reveal">The big reveal</h2>
+<ul>
+<li>Vicente has a green screen and was lying about his office???</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Fast shutter speed and small aperture size: doesn&rsquo;t allow much light</li>
+<li>Slow shutter speed, large aperture size: allows a lot of light</li>
+<li>We learned about homogenous coordinates, intrinsic/extrinsic camera matrices</li>
+</ul>
+<h3 id="recap-extrinsic-vs-intrinsic">Recap: extrinsic vs. intrinsic</h3>
+<ul>
+<li>Intrinsic parameters: things you can&rsquo;t control about the camera
+<ul>
+<li>Happen &ldquo;inside&rdquo; the camera</li>
+<li>E.g., optical center, focal length, etc.</li>
+</ul>
+</li>
+<li>Extrinsic parameters: things you can control, outside the camera
+<ul>
+<li>Position, rotation, etc.</li>
+</ul>
+</li>
+</ul>
+<h1 id="light-what-determines-the-color-of-a-pixel">Light: what determines the color of a pixel?</h1>
+<ul>
+<li>Light emanates from some source, bounces off of surface elements and strikes sensors/our eyes</li>
+</ul>
+<h3 id="brdf-bidirectional-reflectance-distribution-function">BRDF (Bidirectional reflectance distribution function)</h3>
+<ul>
+<li>Very complex model for modeling reflections</li>
+</ul>
+<h3 id="types-of-surfaces">Types of surfaces</h3>
+<ul>
+<li>Diffuse: light strikes at a point, and is reflected &ldquo;almost uniformly&rdquo; in all directions
+<ul>
+<li>Perfect diffuse surface = &ldquo;Lambertian&rdquo; surface</li>
+</ul>
+</li>
+<li>Glossy: light strikes a point, is reflected &ldquo;mostly&rdquo; in one direction
+<ul>
+<li>A kind of specular surface</li>
+</ul>
+</li>
+<li>Mirror: light strikes a point, is reflected entirely in one direction
+<ul>
+<li>A kind of specular surface</li>
+</ul>
+</li>
+</ul>
+<h3 id="reflection">Reflection</h3>
+<ul>
+<li>Body reflection:
+<ul>
+<li>Diffuse reflection (e.g., clay)</li>
+</ul>
+</li>
+<li>Surface reflection:
+<ul>
+<li>Specular reflection (e.g., metal)</li>
+</ul>
+</li>
+</ul>
+<h3 id="phong-reflection-model">Phong reflection model</h3>
+<ul>
+<li>Approximation of BRDF</li>
+<li>BRDF of many surfaces can be approximated by Lambertian + Specular model
+<ul>
+<li>One component is perfectly defuse</li>
+<li>The other is a perfect mirror</li>
+</ul>
+</li>
+</ul>
+<p>Three components in the Phong model:</p>
+<ul>
+<li>Ambient light (constant we add to each value)
+<ul>
+<li>Illuminates every point in the scene equally</li>
+</ul>
+</li>
+<li>Diffuse
+<ul>
+<li>Computed by a constant times (light direction dot normal) times diffuse coefficient</li>
+</ul>
+</li>
+<li>Specular</li>
+</ul>
+<p>Interesting consequence: diffuse doesn&rsquo;t depend at all on viewing angle</p>
+<h3 id="a-photons-life-choices">&ldquo;A photon&rsquo;s life choices&rdquo;</h3>
+<ul>
+<li>Absorption</li>
+<li>Diffusion</li>
+<li>Reflection</li>
+<li>Transparency</li>
+<li>Refraction</li>
+<li>Fluorescence</li>
+<li>Subsurface scattering</li>
+<li>Phosphorescence</li>
+<li>Interreflection</li>
+</ul>
+<h2 id="the-eye-as-a-camera">The eye as a camera</h2>
+<ul>
+<li>Well, not exactly.</li>
+<li>But we can think of the pupil as an aperture</li>
+<li>Rods/cones on the retina are sensors</li>
+</ul>
+<h2 id="image-processing--filtering">Image processing / filtering</h2>
+<h3 id="color-images-as-tensors">Color images as tensors</h3>
+<p>Tensor of shape <code>(width, height, 3)</code></p>
+<h3 id="basic-image-processing">Basic image processing</h3>
+<p>Brightening: multiply by a constant</p>
+<h3 id="color-spaces-rgb">Color spaces: RGB</h3>
+<ul>
+<li>Some drawbacks:
+<ul>
+<li>High correlation</li>
+<li>Not based on human perception</li>
+</ul>
+</li>
+</ul>
+<h3 id="hsv">HSV</h3>
+<p>More intuitive: hue, saturation, value</p>
+<h3 id="lab">L<em>a</em>b*</h3>
+<p>Based on human perception: a &ldquo;perceptually uniform&rdquo; color spacee</p>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
