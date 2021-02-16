@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>04. Image Filtering, Image Frequencies</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>04. Image Filtering, Image Frequencies</h1><time>February 16, 2021</time></header><h2 id="recap">Recap</h2>
+<p>Previous class:</p>
+<ul>
+<li>The human eye as a camera</li>
+<li>Images as matrices</li>
+<li>Images as functions</li>
+<li>Image processing</li>
+<li>Image filtering</li>
+</ul>
+<h2 id="todays-topics">Today&rsquo;s topics</h2>
+<ul>
+<li>Image filtering: mean filter</li>
+<li>Image blurring</li>
+<li>Image gradients</li>
+<li>Image frequency</li>
+</ul>
+<h3 id="certified-vicente-moment">Certified Vicente Moment</h3>
+<ul>
+<li>Vicente noticed very few people were attending class, so he took attendance</li>
+<li>&hellip;but there&rsquo;s no attendance grade in the syllabus, so he just did it to put a psychologically scary (but practically insignificant) zero in vagrants' gradebooks</li>
+</ul>
+<h3 id="color-images-as-tensors">Color images as tensors</h3>
+<ul>
+<li>Tensors of shape <code>(width, height, channels)</code> (where <code>channels</code> is usually 3)</li>
+</ul>
+<h2 id="image-filtering">Image filtering</h2>
+<h3 id="mean-filter">Mean filter</h3>
+<p>Say we have a &ldquo;peppered image&rdquo;—an otherwise normal image with pixels randomly zeroed out.</p>
+<p>How would we correct this computationally?</p>
+<p><strong>Idea 1:</strong> Take the mean of each neeighborhood of pixels</p>
+<p>Issues:</p>
+<ul>
+<li>Zero pixels are negatively skewed, so their neighborhoods are extremely dark
+<ul>
+<li>Recall from stats: as a measure of central tendency, mean isn&rsquo;t robust to outliers</li>
+</ul>
+</li>
+<li>Blurs the image</li>
+</ul>
+<p><strong>Idea 2:</strong> median filter</p>
+<ul>
+<li>Replace each pixel with the median value of its surrounding neighborhood</li>
+</ul>
+<p>Issues:</p>
+<ul>
+<li>Introduces some distortion in noiseless parts of the image</li>
+</ul>
+<h3 id="image-filtering-convolution-operator">Image filtering: convolution operator</h3>
+<ul>
+<li>Idea: for each neighborhood of pixels in the input image, compute a linear combination of these values and use them to compute an output image
+General form:
+$$
+g(x,y) = \sum_v{\sum_u{k(u,v) \times f(x - u, y - v)}}
+$$</li>
+</ul>
+<p>(<strong>Convention note:</strong> \((u, v)\) represents row-major order)</p>
+<p><strong>Key</strong></p>
+<ul>
+<li>\(k(u,v)\): our kernel.</li>
+<li>\(f(x, y)\): our input image.</li>
+<li>\(g(x,y)\): our output image.</li>
+</ul>
+<h3 id="mean-filter-as-a-convolution">Mean filter as a convolution</h3>
+<p>a.k.a., box filter
+$$
+k(u,v) = \frac{1}{9}
+$$</p>
+<p>(for a \(3 \times 3\) kernel)</p>
+<h3 id="gaussian-blur">Gaussian blur</h3>
+<p>Kernel is calculated from the Gaussian (normal) distribution</p>
+<ul>
+<li>Note: even though any well-formed statistical distribution has to have a maximum cumulative probabiltiy of 1, this isn&rsquo;t a requirement of our kernel</li>
+<li>We can make kernels that don&rsquo;t sum to 1, and many Gaussian blurs don&rsquo;t do this</li>
+</ul>
+<h2 id="practical-considerations">Practical considerations</h2>
+<ul>
+<li>What do we do at the edges?
+<ul>
+<li>Clip image</li>
+<li>Mirror image off at boundaries</li>
+<li>Wrap around</li>
+</ul>
+</li>
+</ul>
+<h2 id="key-properties-of-linear-filters">Key properties of linear filters</h2>
+<ul>
+<li><strong>Linearity</strong>: \( f_{1+2}(I) = f_{1}(I) + f_2(I) \)
+<ul>
+<li>Applying filter 1 and then filter 2 two an image is same as applying a single filter whose kernel is the sum of 1 and 2&rsquo;s kernels</li>
+</ul>
+</li>
+<li><strong>Shift invariance</strong>: Filtering with a shifted filter is the same as filtering a shifted image</li>
+</ul>
+<h2 id="uses">Uses</h2>
+<ul>
+<li>Enhance images</li>
+<li>Extract information</li>
+<li>Detect patterns</li>
+<li>DCNNs</li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
