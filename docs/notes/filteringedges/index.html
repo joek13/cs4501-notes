@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>05. Filtering, Frequencies, and Edges</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>05. Filtering, Frequencies, and Edges</h1><time>February 18, 2021</time></header><h2 id="recap">Recap</h2>
+<ul>
+<li>Convolution (most important)</li>
+</ul>
+<h2 id="today">Today</h2>
+<ul>
+<li>Sobel operator</li>
+<li>Filtering in frequency</li>
+</ul>
+<h2 id="sobel-operator">Sobel operator</h2>
+<ul>
+<li>One sobel kernel detects vertical edges, another detects horizontal</li>
+<li>We take the absolute value of the output of each &ldquo;dot product&rdquo; because negative values don&rsquo;t make sense</li>
+</ul>
+<h2 id="sobel-operators-and-calculus">Sobel operators and calculus</h2>
+<ul>
+<li>Sobel operators are equivalent to 2d partial derivatives of the image</li>
+<li>Vertical sobel operator - partial derivative with respect to X
+<ul>
+<li>A vertical edge is just a change in the image with respect to X</li>
+</ul>
+</li>
+<li>Horizontal sobel operator - partial derivative with respect to Y</li>
+<li>We can compute magnitude and phase at each location</li>
+<li>Useful for detecting edges</li>
+</ul>
+<p>&ldquo;Where is the image changing in x and y?&rdquo;</p>
+<p>In image processing, convention is to describe your input image as \(f[x,y]\) (square brackets for discrete inputs)</p>
+<h3 id="dealing-with-discreteness">Dealing with discreteness</h3>
+<p>Digital images are not continuous, so we can&rsquo;t really take a derivative. But we can:</p>
+<p>$$
+\Delta_x f[x,y] = f[x+1,y] - f[x,y]
+$$</p>
+<p>Also:
+$$
+\Delta_x f[x,y] = f[x+1,y] - f[x-1,y]
+$$</p>
+<p>We can convert these definitions to convolutions.</p>
+<p>i.e., second definition becomes:
+$$
+k(x,y) = [-1, 0, 1]
+$$</p>
+<h3 id="sobel-operators">Sobel operators</h3>
+<p>Vertical sobel operators smooth in Y and then differentiate in X.</p>
+<p>The Sobel kernel is the column matrix \([1,2,1] \times \) the row matrix \([1,0,-1]\)</p>
+<h3 id="relationship-to-gradient">Relationship to gradient</h3>
+<p>The vertical and horizontal sobel operators, taken together, represent the gradient of an iamge.</p>
+<h2 id="frequency">Frequency</h2>
+<ul>
+<li>A brief trip to the analog, continuous world</li>
+</ul>
+<p>Some waves can be represented as the sum of other waves.
+We can transmit signals by passing around &ldquo;numbers in the time dimension.&rdquo;</p>
+<p>Call some waveform \(f(x)\), such that \(f(x) = g(x) + h(x)\) where \(g, h\) are both sine waves</p>
+<p>We <em>could</em> represent a signal in terms of its amplitude over time, but we can also represent it as intensity over different frequencies</p>
+<h3 id="any-function-can-be-approximated-by-polynomials">Any function can be approximated by polynomials</h3>
+<ul>
+<li>Taylor series expansion: any function can be represented as a summation of polynomials</li>
+<li>&hellip;if you let your final polynomial have a very high degree</li>
+</ul>
+<p>But this is hard in practice. Periodic functions need to be approximated by many, many, many, many polynomials. The approximation won&rsquo;t last forever for a finite number of terms.</p>
+<h2 id="jean-baptiste-joseph-fourier">Jean Baptiste Joseph Fourier</h2>
+<p>Crazy idea (1807): any function can be represented as the sum of sines and cosines.</p>
+<p>Fourier transform takes a function in the time domain and transforms it to the frequency domain</p>
+<ul>
+<li>Fourier transform stores the magnitude and phase at each frequency</li>
+<li>Magnitude encodes how much signal there is at a particular frequency</li>
+<li>Phaes encodes spatial information indirectly.</li>
+</ul>
+<h2 id="issue-dft-is-slow">Issue: DFT is slow</h2>
+<p>Solution: FFT</p>
+<ul>
+<li>a much more efficient approximation of the DFT, so efficient that it is often implemented in hardware</li>
+</ul>
+<h2 id="convolution-theorem">Convolution theorem</h2>
+<ul>
+<li>&ldquo;The fourier transform of the convolution of two functions is the product of their Fourier transforms.&rdquo;</li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
