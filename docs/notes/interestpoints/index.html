@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>06. Interest Points: Corners and Blobs</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>06. Interest Points: Corners and Blobs</h1><time>February 23, 2021</time></header><h3 id="recap">Recap</h3>
+<ul>
+<li>Frequency domain</li>
+<li>Filtering in frequency</li>
+<li>Edge detection - &ldquo;Canny&rdquo;</li>
+</ul>
+<p>Some goals:</p>
+<ul>
+<li>Detecting corners</li>
+</ul>
+<p>Remember the Sobel operators? They can be thought of as &ldquo;edge&rdquo; detectors. Can we envision a similar procedure for corners?</p>
+<h3 id="edge-detection">Edge detection</h3>
+<ul>
+<li>Sobel + Thresholding</li>
+<li>Compute Sobel operators in \(x\) and \(y\) for each pixel in an image, then threshold based on magnitude</li>
+</ul>
+<h3 id="digression-on-thresholding">Digression on Thresholding</h3>
+<p>Thresholding is &ldquo;a very powerful algorithm&rdquo; in computer vision</p>
+<h3 id="canny-edge-detector">Canny Edge Detector</h3>
+<ul>
+<li>Produces cleaner, less noisy, more clearly delineated edges than the Sobel method</li>
+<li>Produces thin edges (1px wide)</li>
+<li>Tries to preserve edge connectivity</li>
+<li>Commonly implemented in image processing libraries.</li>
+</ul>
+<p>Procedure:</p>
+<ol>
+<li>Filter image with x, y derivatives of Gaussian
+<ul>
+<li>Apply Gaussian filter to image</li>
+<li>Use Sobel (or alternative) to approximate x/y derivative of that image</li>
+<li>Create two kernels whose values come from the x/y derivative of the Gaussian distribution function</li>
+<li>Filter image with each kernel to find a &ldquo;smoother&rdquo; gradient</li>
+</ul>
+</li>
+<li>Find magnitude and orientation of gradient at each pixel
+<ul>
+<li>Magntiude: strength of change</li>
+<li>Orientation: direction where gradient changes most strongly</li>
+</ul>
+</li>
+<li>Non-maximum suppression:
+<ul>
+<li>Thin multi-pixel wide &ldquo;ridges&rdquo; down to single pixel width</li>
+<li>Makes our boundaries thinner, suppresses noise</li>
+</ul>
+</li>
+</ol>
+<h3 id="non-maximum-suppression">Non-maximum suppression</h3>
+<ul>
+<li>Edges occur at the maximum value of the gradient</li>
+<li>Non-maximum suppression algorithm only keeps pixels that represent max gradient</li>
+</ul>
+<h3 id="hysterisis-thresholding-connectivity-analysis">Hysterisis thresholding, connectivity analysis</h3>
+<p>More steps employed in Canny</p>
+<h4 id="hysterisis-thresholding">Hysterisis thresholding</h4>
+<ul>
+<li>Strengthens connected-but-weak edges, I think
+<ul>
+<li>Two thresholds, high and low</li>
+<li>High threshold defines when we start new edges</li>
+<li>Low threshold defines when we continue an edge</li>
+</ul>
+</li>
+<li>Not super clear on this</li>
+</ul>
+<h2 id="corners-and-interest-points">Corners, and Interest Points</h2>
+<ul>
+<li>How to find corners</li>
+<li>What is a corner?</li>
+</ul>
+<h3 id="whats-so-interesting">What&rsquo;s so interesting?</h3>
+<ul>
+<li>If we can find corners, maybe we can match images belonging to the same object?</li>
+<li>Or maybe we can triangulate the 3D coordinates of the image.</li>
+</ul>
+<h3 id="basic-idea">Basic idea</h3>
+<ul>
+<li>We should easily recognize a corner by looking through a small window</li>
+<li>Shifting the window in ANY direction should give a large change in intensity</li>
+</ul>
+<p>This property is unique to conrners:</p>
+<ul>
+<li>Flat region: no change in any direction</li>
+<li>Edge: no change along the edge direction</li>
+<li>Corner: changes in any direction</li>
+</ul>
+<h3 id="harris-corner-detection">Harris corner detection</h3>
+<p>Compute the following matrix of squared gradients for every pixel.</p>
+<p>$$
+M = \sum_{patch}{\begin{bmatrix}I_x^2 &amp; I_xI_y \\ I_yI_x &amp; I_y^2 \end{bmatrix}}
+$$</p>
+<p>Where \(I_x, I_y\) are gradients computed using Sobel or some other approximation.</p>
+<p>E.g., : flat area has \(I_x = I_y = 0\). \(M = 0\)</p>
+<p>Horizontal edge has \(I_x = 0, I_y = b\).</p>
+<p>Corner: \(M = \begin{bmatrix}a &amp; 0 \\ 0 &amp; b\end{bmatrix}\)</p>
+<p>Compute \(det(M)\). If \(det(M)\) is greater than some threshold, then we say it&rsquo;s a corner.</p>
+<h4 id="drawback">Drawback</h4>
+<p>This works for corners that are aligned with the coordinate grid. But not for other corners.</p>
+<p>To make it work for other corners, we use a modified formula:</p>
+<p>\(det(M) - 0.06 trace(M)^2 \). We threshold it similarly.</p>
+<p>This formula works because it essentially tests whether this matrix can be represented as a diagonal matrix under some rotation. (Under the correct rotation, our corners are aligned with the coordinate grid.)</p>
+<p>(TODO: come back and study this)</p>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
