@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>07. Hough Transform and SIFT Features</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>07. Hough Transform and SIFT Features</h1><time>February 25, 2021</time></header><h2 id="last-class---interest-points">Last class - interest points</h2>
+<ul>
+<li>Corners</li>
+<li>Blobs (we didn&rsquo;t discuss)</li>
+</ul>
+<h2 id="todays-class">Today&rsquo;s class</h2>
+<ul>
+<li>Blob detection - difference of Gaussians</li>
+</ul>
+<h2 id="line-detection">Line detection</h2>
+<ul>
+<li>Distinct from edge detection</li>
+<li>We want to take a shape and divide it into the sum of rectangles</li>
+</ul>
+<h3 id="idea-1-lead-with-sobel">Idea 1: lead with Sobel</h3>
+<ul>
+<li>Sobel extracts horizontal / vertical edges</li>
+<li>&hellip;but what if the image is rotated?</li>
+<li>Canny: let&rsquo;s detect all edges</li>
+<li>Introduces new issue: not all edges are lines</li>
+</ul>
+<h3 id="idea-2-count-pixels-that-support-each-line-hypothesis">Idea 2: count pixels that support each line hypothesis</h3>
+<ul>
+<li>Use thresholding to decide which lines have the most support</li>
+<li>&hellip;but what if the edges are rotated?</li>
+</ul>
+<h2 id="hough-transform">Hough transform</h2>
+<ul>
+<li>Early type of &ldquo;voting scheme&rdquo; for detecting lines</li>
+<li>Each pixel &ldquo;casts a vote&rdquo; for lines</li>
+</ul>
+<p>General outline:</p>
+<ul>
+<li>Discretize <em>parameter space</em> into bins (parameters being slope and intercept)</li>
+<li>For each feature point in the image, put a vote in every bin in the parameter space that could have generated this point.
+<ul>
+<li>The &ldquo;spoke&rdquo; of lines that intersect this point.</li>
+</ul>
+</li>
+<li>Find bins that have the most votes.</li>
+</ul>
+<p>You <em>do</em> need to apply Sobel (or Canny) first, because we only want edges to vote</p>
+<p>Then, we define a &ldquo;buffer matrix&rdquo; that describes every possible line.</p>
+<p>E.g., \(m\) on the y-axis, \(b\) on the x-axis.</p>
+<p>But there are problems with the \((m,b)\) parameter space.</p>
+<ul>
+<li>Unbounded parameter domains</li>
+<li>Vertical lines require infinte \(m\)</li>
+</ul>
+<p>What if we use an alternative formula: polar equation of a line
+$$
+xcos(\theta) + ysin(\theta) = \rho
+$$
+Now, our parameters are \((\theta, \rho)\). \(Rng(\theta) = [0, \pi), Rng(\rho) = [0, \text{some sensible upper bound determined by image size})\)</p>
+<h2 id="hough-transform-1">Hough transform</h2>
+<p>As described, this is very slow, but optimizations exist.
+Susceptible to some noise, can often detect spurious lines.</p>
+<p>Each point \((x, y)\) in the image space will add a sinusoid in the hough transform parameter space.</p>
+<h3 id="incorporating-image-gradients">Incorporating image gradients</h3>
+<ul>
+<li>When we detect an edge point, we also know its gradient direction</li>
+<li>But this means that the line is actually uniquely determined.</li>
+</ul>
+<p>So we can optimize our transform by setting Theta according to the gradient. Voting is much easier now!!!</p>
+<h3 id="generalizing-to-other-shapes">Generalizing to other shapes</h3>
+<ul>
+<li>We can vote in &ldquo;circle space&rdquo; to detect for circles, as long as we can think of a way to convert to a reasonable parameter space.</li>
+</ul>
+<h3 id="for-the-quiz">For the quiz</h3>
+<ul>
+<li>Make sure you learn how to read the Hough space of an image</li>
+</ul>
+<h2 id="what-about-images-without-corners">What about images without corners?</h2>
+<ul>
+<li>Many organic images lack sharp corners.</li>
+<li>Corner detection is difficult on these.</li>
+</ul>
+<h2 id="blob-filter">Blob filter</h2>
+<ul>
+<li>&ldquo;Laplacian of Gaussian&rdquo; - circularly symmetric operator for blob detection in 2D</li>
+</ul>
+<p>Uses Laplacian operator, \(\nabla^2 f  = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} \)</p>
+<h2 id="symmetry">Symmetry</h2>
+<ul>
+<li>Remember, filters tend to find things that &ldquo;look like the filter&rdquo;</li>
+</ul>
+<h2 id="accounting-for-scale">Accounting for scale</h2>
+<p>Scale-space detection</p>
+<ul>
+<li>Scale the image: simply convolve the image at several different revolutions, using the same kernel</li>
+<li>Scale the blob: convolve the image using different scaled kernels</li>
+</ul>
+<h2 id="efficient-implementation">Efficient implementation</h2>
+<ul>
+<li>Approximating the Laplacian using difference of gaussians</li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
