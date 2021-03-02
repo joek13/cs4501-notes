@@ -87,6 +87,7 @@ Susceptible to some noise, can often detect spurious lines.</p>
 <h3 id="generalizing-to-other-shapes">Generalizing to other shapes</h3>
 <ul>
 <li>We can vote in &ldquo;circle space&rdquo; to detect for circles, as long as we can think of a way to convert to a reasonable parameter space.</li>
+<li>In fact, we can generalize the Hough transform to any kind of shape / geometrical configuration, even irregular ones.</li>
 </ul>
 <h3 id="for-the-quiz">For the quiz</h3>
 <ul>
@@ -114,7 +115,64 @@ Susceptible to some noise, can often detect spurious lines.</p>
 </ul>
 <h2 id="efficient-implementation">Efficient implementation</h2>
 <ul>
-<li>Approximating the Laplacian using difference of gaussians</li>
+<li>Approximating the Laplacian using Difference of Gaussians</li>
+</ul>
+<h2 id="ransac-322021">Ransac (3/2/2021)</h2>
+<h3 id="line-detection---lsr">Line detection - LSR</h3>
+<p>Given pixels in input image, find line of best fit.</p>
+<p>Simple enough, but not resilient to outliers&hellip;</p>
+<h3 id="ransac">RANSAC</h3>
+<p>RANdom SAmple Consensus</p>
+<ol>
+<li>Sample (randomly) the number of points required to fit the model</li>
+<li>Solve for model parameters using samples</li>
+<li>Score by the fraction of inliers within a preset threshold of the model</li>
+</ol>
+<p>For lines thru a cloud of points, this algorithm:</p>
+<ul>
+<li>Repeatedly samples 2 points</li>
+<li>Draws a line through those two points</li>
+<li>Scores by fraction of inliers</li>
+</ul>
+<p>And these steps are repeated until we find a &ldquo;good&rdquo; model. What&rsquo;s &ldquo;good&rdquo;?</p>
+<p>$$
+N_{inliers} = log(1-p) / log(1-(1-e)^s)
+$$</p>
+<p><strong>Pros of RANSAC:</strong></p>
+<ul>
+<li>Robust to outliers</li>
+<li>Applicable for larger number of parameters than Hough transform</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Hard to guess alignment of points (cathedral image example)</li>
+</ul>
+<h2 id="sift">SIFT</h2>
+<ul>
+<li>Scale Invariant Feature Transform</li>
+</ul>
+<h3 id="eliminating-rotational-ambiguity">Eliminating rotational ambiguity</h3>
+<p>To assign a unique orientation to circular image windows:</p>
+<ul>
+<li>Create a histogram of local gradient directions in the patch</li>
+<li>Assign canonical orientation at peak of smoothed histogram</li>
+</ul>
+<p>SIFT not only detects features, but gives you a representation where features can be used to describe the object pictured</p>
+<h3 id="sift-descriptors">SIFT descriptors</h3>
+<ul>
+<li>Inspiration: complex neurons in primary visual cortex</li>
+<li>Divide a feature &ldquo;zone&rdquo; into 4x4 grid of cells</li>
+<li>Each cell is now the &ldquo;histogram&rdquo; of the gradients of each pixel inside
+<ul>
+<li>Roughtly: &ldquo;This cell contains a lot of gradients pointing Northeast&rdquo;</li>
+</ul>
+</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Object detection/matching</li>
+<li>Panaroma stitching</li>
+<li>Orientation calculation</li>
 </ul>
 </article>
 

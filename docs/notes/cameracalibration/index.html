@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>08. Camera Calibration, Dense Stereo</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>08. Camera Calibration, Dense Stereo</h1><time>March 2, 2021</time></header><h1 id="camera-calibration">Camera Calibration</h1>
+<ul>
+<li>Goal: find parameters of the camera transformation matrix
+Recall:
+$$
+x = K \begin{bmatrix} R &amp; t \end{bmatrix}X
+$$
+So our goal is to find \(K \begin{bmatrix} R &amp; t \end{bmatrix}\)</li>
+</ul>
+<h2 id="calibrating-the-camera">Calibrating the camera</h2>
+<ul>
+<li>
+<p>Use a scene with known geometry</p>
+</li>
+<li>
+<p>Get a least-squares solution</p>
+</li>
+<li>
+<p>Use some room with markers; we know the real-world location of these markers and we know the image location of these markers</p>
+</li>
+<li>
+<p>Fit camera parameters to satisfy these knowns</p>
+</li>
+<li>
+<p>To solve this system, we need <em>at least</em> 6 known points</p>
+<ul>
+<li>But in practice, many more than 6 are used</li>
+</ul>
+</li>
+<li>
+<p>We use SVD to solve this system of linear equations <em><strong>(how? linear algebra that i&rsquo;ll have to go learn on my own)</strong></em>
+(We can technically use any method of solving linear equations)</p>
+</li>
+</ul>
+<p>After performing calibration, we can do things like project augmented reality things</p>
+<ul>
+<li>Not robust to camera moving, rotating, etc.</li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>

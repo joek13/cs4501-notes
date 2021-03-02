@@ -65,6 +65,7 @@ So we can optimize our transform by setting Theta according to the gradient. Vot
 
 ### Generalizing to other shapes
 - We can vote in "circle space" to detect for circles, as long as we can think of a way to convert to a reasonable parameter space.
+- In fact, we can generalize the Hough transform to any kind of shape / geometrical configuration, even irregular ones.
 
 ### For the quiz
 - Make sure you learn how to read the Hough space of an image
@@ -87,4 +88,57 @@ Scale-space detection
 - Scale the blob: convolve the image using different scaled kernels
 
 ## Efficient implementation
-- Approximating the Laplacian using difference of gaussians
+- Approximating the Laplacian using Difference of Gaussians 
+
+## Ransac (3/2/2021)
+
+### Line detection - LSR 
+Given pixels in input image, find line of best fit.
+
+Simple enough, but not resilient to outliers...
+
+### RANSAC
+RANdom SAmple Consensus
+
+1. Sample (randomly) the number of points required to fit the model
+2. Solve for model parameters using samples
+3. Score by the fraction of inliers within a preset threshold of the model
+
+For lines thru a cloud of points, this algorithm:
+- Repeatedly samples 2 points
+- Draws a line through those two points
+- Scores by fraction of inliers
+
+And these steps are repeated until we find a "good" model. What's "good"?
+
+$$
+    N_{inliers} = log(1-p) / log(1-(1-e)^s)
+$$
+
+**Pros of RANSAC:**
+- Robust to outliers
+- Applicable for larger number of parameters than Hough transform
+
+**Cons:**
+- Hard to guess alignment of points (cathedral image example)
+
+## SIFT
+- Scale Invariant Feature Transform
+
+### Eliminating rotational ambiguity
+To assign a unique orientation to circular image windows:
+- Create a histogram of local gradient directions in the patch
+- Assign canonical orientation at peak of smoothed histogram
+
+SIFT not only detects features, but gives you a representation where features can be used to describe the object pictured
+
+### SIFT descriptors
+- Inspiration: complex neurons in primary visual cortex
+- Divide a feature "zone" into 4x4 grid of cells
+- Each cell is now the "histogram" of the gradients of each pixel inside
+    - Roughtly: "This cell contains a lot of gradients pointing Northeast"
+
+### Applications
+- Object detection/matching
+- Panaroma stitching
+- Orientation calculation
