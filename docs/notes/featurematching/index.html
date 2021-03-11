@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="http://joek13.github.io/cs4501-notes/favicon.ico">
+    
+    <link rel="stylesheet" href="/cs4501-notes/css/style.min.css">
+
+    <title>09. Feature Matching and Dense Stereo</title>
+</head>
+<body><header id="banner">
+    <h2><a href="http://joek13.github.io/cs4501-notes/">Joe Kerrigan&#39;s cs4501 Notes</a></h2>
+    <nav>
+        <ul>
+            
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>09. Feature Matching and Dense Stereo</h1><time>March 11, 2021</time></header><h2 id="recap">Recap</h2>
+<ul>
+<li>Camera calibration (solving some complex linear algebra problem to determine what the camera matrix is)
+<ul>
+<li>We have a little bit of noise, so our giant system probably won&rsquo;t have a single solution</li>
+</ul>
+</li>
+</ul>
+<h2 id="panorama-stitching-more-later">Panorama Stitching (more later)</h2>
+<h2 id="dense-stereo">Dense Stereo</h2>
+<p>Using two views of an object to extract information about it in three dimensions</p>
+<h3 id="motivation">Motivation</h3>
+<p>Structure and depth are inherently ambiguous from single views</p>
+<ul>
+<li>Scale is ambiguous</li>
+</ul>
+<h3 id="extracting-3d-information">Extracting 3d information</h3>
+<ul>
+<li>Shading; light is brightest when it strikes along the surface normal; dark when the two are orthogonal</li>
+<li>Focus/blurring; can use focus to distinguish foreground from background</li>
+<li>Texture; extracting shape from, say, the roughly equidistant seeds of a strawberry</li>
+<li>Motion</li>
+</ul>
+<h3 id="estimating-scene-shape">Estimating scene shape</h3>
+<ul>
+<li>&ldquo;Shape from X&rdquo;: shading, texture, focus, motion, &hellip;</li>
+</ul>
+<p>Stereo:</p>
+<ul>
+<li>Shape from &ldquo;motion&rdquo; between two views</li>
+<li>Infer 3d shape of scene from two (multiple) images taken from slightly different viewpoints</li>
+</ul>
+<p>Take inspiration from human stereopsis: we infer depth from the slight visual disparity between each eye</p>
+<h2 id="epipolar-geometry">Epipolar geometry</h2>
+<h3 id="simplest-case-parallel-cameras">Simplest case: parallel cameras</h3>
+<ul>
+<li>Perform correspondence search pixel-by-pixel across images
+<ul>
+<li>Only really works if we have good texture and no repetition</li>
+</ul>
+</li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</footer></body>
+</html>
