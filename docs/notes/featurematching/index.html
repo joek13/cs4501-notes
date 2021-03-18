@@ -61,6 +61,49 @@
 <li>Only really works if we have good texture and no repetition</li>
 </ul>
 </li>
+<li>Use similar triangles to solve for disparities</li>
+<li>Use disparities to estimate depth</li>
+</ul>
+<h3 id="less-simple-case-when-cameras-arent-aligned">Less simple case: when cameras aren&rsquo;t aligned</h3>
+<p><strong>Stereo image rectification</strong></p>
+<ul>
+<li>Reproject onto a common plane parallel to the line between optical centeers
+<ul>
+<li>Two homographies (3x3 transform), one for each input image reprojection</li>
+<li>Note: matrices can only represent linear transformations</li>
+</ul>
+</li>
+<li>Pixel motion is horizontal after this translation</li>
+</ul>
+<h3 id="robust-feature-based-alignment">Robust feature-based alignment</h3>
+<ul>
+<li>Extract features</li>
+<li>Compute <em>putative matches</em></li>
+<li>Loop:
+<ul>
+<li>Hypothesize a transformation T for some small subset of matches</li>
+<li>Verify the transformation (search for other matches consistent with T)</li>
+</ul>
+</li>
+</ul>
+<p>Sound familiar? This is exactly RANSAC</p>
+<p>Mosaics have a natural interpretation in 3D</p>
+<ul>
+<li>The images are reprojected onto a common plane</li>
+<li>The mosaic is formed on this plane</li>
+<li>&ldquo;Synthetic wide-angle camera&rdquo;</li>
+</ul>
+<h3 id="image-reprojection">Image reprojection</h3>
+<ul>
+<li>How to relate two images from the same center?</li>
+<li>Cast a ray through each pixel in first image</li>
+<li>Draw the pixel that ray intersects the second image
+We can represent this as a 2d image warp instead of a 3d projection</li>
+</ul>
+<h3 id="image-reprojection-as-a-homography">Image reprojection as a homography</h3>
+<ul>
+<li>A projective transform is a mapping between any two picture planes with same center of projection</li>
+<li>Called a homography</li>
 </ul>
 </article>
 
