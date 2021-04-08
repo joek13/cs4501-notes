@@ -69,3 +69,5 @@ We can represent this as a 2d image warp instead of a 3d projection
 ### Image reprojection as a homography
 - A projective transform is a mapping between any two picture planes with same center of projection
 - Called a homography
+
+- Do a complex linear system to compute this homography

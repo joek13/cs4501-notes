@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://joek13.github.io/cs4501-notes/notes/essentialmatrix/</loc>
-    <lastmod>2021-03-18T12:30:45-04:00</lastmod>
+    <loc>http://joek13.github.io/cs4501-notes/notes/conv/</loc>
+    <lastmod>2021-04-08T13:19:54-04:00</lastmod>
   </url>
   
   <url>
     <loc>http://joek13.github.io/cs4501-notes/notes/</loc>
+    <lastmod>2021-04-08T13:19:54-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://joek13.github.io/cs4501-notes/notes/softmax/</loc>
+    <lastmod>2021-03-30T12:53:47-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://joek13.github.io/cs4501-notes/notes/essentialmatrix/</loc>
     <lastmod>2021-03-18T12:30:45-04:00</lastmod>
   </url>
   
